@@ -1,7 +1,8 @@
 const category = ["General Knowledge", "Mythology", "Animals"]
-const categoryRef = [1,20,20]
+const categoryRef = [1,20,27]
 const difficulty = ["easy", "medium", "hard"]
 const type = ["Multiple Choice", "T/F"]
+const typeRef = ["multiple","boolean"]
 const NoQ = ["5", "6", "7", "8", "9", "10"]
 
 
@@ -29,8 +30,7 @@ playButton.addEventListener("click", function() {
 
         var button1 = document.createElement("p");
         button1.appendChild(select1);
-        document.getElementById("container").appendChild(button1);
-
+        document.getElementById("home").appendChild(button1);
     }
 
     // displayPlay.style.display = "none";
@@ -38,7 +38,7 @@ playButton.addEventListener("click", function() {
 
     var startButton = document.createElement("button");
     startButton.textContent = "Start the Quiz!";
-    document.getElementById("container").appendChild(startButton);
+    document.getElementById("home").appendChild(startButton);
 
     const selections = []
 
@@ -48,33 +48,54 @@ playButton.addEventListener("click", function() {
             var selectedValue = selectedOption.text;
             selections.push(selectedValue)
         }
-        console.log(selections)
-        generateQs(selections)
+        console.log(selections);
+        getQs(selections);
     });
 
 });
 
 
-function generateQs (selections) {
-// const apiURL = "https://opentdb.com/api.php?amount=25&category=9&difficulty=medium&type=boolean"
-// https://opentdb.com/api.php?amount=5&category=9&difficulty=Easy&type=boolean
+function getQs (selections) {
+    // const apiURL = "https://opentdb.com/api.php?amount=25&category=9&difficulty=medium&type=boolean"
+    // https://opentdb.com/api.php?amount=5&category=9&difficulty=Easy&type=boolean
 
-const dynamicURL = "https://opentdb.com/api.php?amount=" + selections[3] 
-+ "&category=" + 20 +
-"&difficulty=" + selections[1] + "&type=boolean"
+    const dynamicURL = "https://opentdb.com/api.php?amount=" + selections[3] 
+    + "&category=" + 9 +
+    "&difficulty=" + selections[1] + "&type=multiple"
 
-console.log(dynamicURL);
+    console.log(dynamicURL);
 
-fetch(dynamicURL)
-    .then(function (response) {
-        return response.json()
-    })
-    .then(function(jsonData) {
-        console.log(jsonData)
-    })
+    fetch(dynamicURL)
+        .then(function (response) {
+            return response.json()
+        })
+        .then(function(jsonData) {
+            const pulledData = jsonData;
+            console.log(pulledData)
+            generateQs(pulledData)
+        })
 
-    
 }
+
+function generateQs(pulledData) {
+    var results = pulledData.results;
+    console.log(results)
+    for (var k = 0; k < results.length; k++) {
+        console.log(results[k]);
+        var questionBox = document.createElement("questionCard");
+        var questionCat = document.createElement("p");
+        var questionQn = document.createElement("p");
+
+        questionCat.textContent= results[k].category;        
+        questionQn.textContent= results[k].question;
+        // questionBox.appendChild(results[k]);
+        document.getElementById("container").appendChild(questionBox);
+        questionBox.appendChild(questionCat);
+        questionBox.appendChild(questionQn);
+    }
+}
+
+
 // - Take user input to create quiz object
 // create start function
     // create defined variables to push to the API
