@@ -19,7 +19,7 @@ h2 {
     text-align: center;
     padding-bottom: 5rem;
 }
-.container {
+#container {
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -35,18 +35,34 @@ h2 {
     flex-direction: column;
 }
 
-button {
+button#Play {
+  position: relative;
+  display: inline;
     font-size: 2rem;
     padding: 2rem 0;
     width: 30rem;
     text-align: center;
+    margin: 1rem;
+ 
+}
+
+button#HighScore {
+  position: relative;
+  display: inline;
+    font-size: 2rem;
+    padding: 2rem 0;
+    width: 30rem;
+    text-align: center;
+    margin: auto;
+ 
 }
 
 button:hover {
-    cursor: pointer;
-    box-shadow: 0 1rem 1rem 0;
-    transition: transform 150%;
-    animation: wiggle 2s linear infinite;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 1rem 1rem 0;
+  transition: transform 150%;
+  animation: wiggle 2s linear infinite;
 }
 
 @keyframes wiggle {
@@ -71,5 +87,13 @@ button:hover {
       40%, 100% {
         transform: rotateZ(0);
       }
-    }
+    
+}
+
+select {
+  position: relative;
+  font-size: 2rem;
+  display: inline;
+  margin: auto;
+  justify-content: end;
 }
