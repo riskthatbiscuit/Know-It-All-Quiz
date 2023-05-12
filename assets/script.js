@@ -1,4 +1,12 @@
-const apiURL = "https://opentdb.com/api.php?amount=25&category=9&difficulty=medium&type=boolean"
+const category = ["General Knowledge", "Mythology", "Animals"]
+const categoryRef = [1,20,20]
+const difficulty = ["easy", "medium", "hard"]
+const type = ["Multiple Choice", "T/F"]
+const NoQ = ["5", "6", "7", "8", "9", "10"]
+
+var playButton = document.querySelector("#Play");
+var displayHighScore = document.querySelector("#HighScore");
+var displayPlay = document.querySelector("#Play");
 
 const dynamicURL = "https://opentdb.com/api.php?amount=" + WHATEVERNUMBERTHEUSERCHOSE 
 + "&category=" + WHATEVERCATEGORYCODETHEUSERCHOSE +
@@ -32,38 +40,65 @@ NoQ: "5"
 
 const lists = [category, difficulty, type, NoQ];
 
-for (j=0; j < lists.length; j++) {
-    var select1 = document.createElement("select");
-    for (var i = 0; i < lists[j].length; i++) {
-        var option = document.createElement("option");
-        option.value = (j+1)*100 + i;
-        option.text = lists[j][i];
-        select1.appendChild(option);
+playButton.addEventListener("click", function() {
+     
+    for (j=0; j < lists.length; j++) {
+        var select1 = document.createElement("select");
+        for (var i = 0; i < lists[j].length; i++) {
+            var option = document.createElement("option");
+            option.value = (j+1)*100 + i;
+            option.text = lists[j][i];
+            select1.appendChild(option);
+        }
+
+        var button1 = document.createElement("p");
+        button1.appendChild(select1);
+        document.getElementById("container").appendChild(button1);
+
     }
 
-    var button1 = document.createElement("p");
-    button1.appendChild(select1);
-    document.body.appendChild(button1);
+    // displayPlay.style.display = "none";
+    // displayHighScore.style.display = "none";
 
-}
+    var startButton = document.createElement("button");
+    startButton.textContent = "Start the Quiz!";
+    document.getElementById("container").appendChild(startButton);
 
-var startButton = document.createElement("button");
-startButton.textContent = "Start the Quiz!";
-document.body.appendChild(startButton);
+    const selections = []
 
-const selections = []
+    startButton.addEventListener("click", function() {
+        for (j=0; j < lists.length; j++) { 
+            var selectedOption = document.querySelectorAll('select')[j].options[document.querySelectorAll('select')[j].selectedIndex];
+            var selectedValue = selectedOption.text;
+            selections.push(selectedValue)
+        }
+        console.log(selections)
+        generateQs(selections)
+    });
 
-startButton.addEventListener("click", function() {
-    for (j=0; j < lists.length; j++) { 
-        var selectedOption = document.querySelectorAll('select')[j].options[document.querySelectorAll('select')[j].selectedIndex];
-        var selectedValue = selectedOption.text;
-        selections.push(selectedValue)
-    }
-    console.log(selections)
 });
 
 
+function generateQs (selections) {
+// const apiURL = "https://opentdb.com/api.php?amount=25&category=9&difficulty=medium&type=boolean"
+// https://opentdb.com/api.php?amount=5&category=9&difficulty=Easy&type=boolean
 
+const dynamicURL = "https://opentdb.com/api.php?amount=" + selections[3] 
++ "&category=" + 20 +
+"&difficulty=" + selections[1] + "&type=boolean"
+
+console.log(dynamicURL);
+
+fetch(dynamicURL)
+    .then(function (response) {
+        return response.json()
+    })
+    .then(function(jsonData) {
+        console.log(jsonData)
+    })
+
+    
+}
 // - Take user input to create quiz object
 // create start function
     // create defined variables to push to the API
