@@ -17,7 +17,7 @@ var displayPlay = document.querySelector("#Play");
 const lists = [category, difficulty, type, NoQ];
 
 playButton.addEventListener("click", function() {
-     
+    
     for (j=0; j < lists.length; j++) {
         var select1 = document.createElement("select");
         for (var i = 0; i < lists[j].length; i++) {
