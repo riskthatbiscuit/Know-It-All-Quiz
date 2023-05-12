@@ -8,9 +8,9 @@ var playButton = document.querySelector("#Play");
 var displayHighScore = document.querySelector("#HighScore");
 var displayPlay = document.querySelector("#Play");
 
-const dynamicURL = "https://opentdb.com/api.php?amount=" + WHATEVERNUMBERTHEUSERCHOSE 
-+ "&category=" + WHATEVERCATEGORYCODETHEUSERCHOSE +
-"&difficulty=" + WHATEVERDIFFICULTYTHEUSERCHOSE 
+// const dynamicURL = "https://opentdb.com/api.php?amount=" + WHATEVERNUMBERTHEUSERCHOSE 
+// + "&category=" + WHATEVERCATEGORYCODETHEUSERCHOSE +
+// "&difficulty=" + WHATEVERDIFFICULTYTHEUSERCHOSE 
 
 fetch(apiURL)
     .then(function (response) {
@@ -20,18 +20,18 @@ fetch(apiURL)
         console.log(jsonData)
     })
 
-const category = ["General Knowledge", "Mythology", "Animals"]
-const difficulty = ["Easy", "Medium", "Hard"]
-const type = ["Multiple Choice", "T/F"]
-const NoQ = ["5", "6", "7", "8", "9", "10"]
+// const category = ["General Knowledge", "Mythology", "Animals"]
+// const difficulty = ["Easy", "Medium", "Hard"]
+// const type = ["Multiple Choice", "T/F"]
+// const NoQ = ["5", "6", "7", "8", "9", "10"]
 
-var selection = {
-category: "General Knowledge",
-difficulty: "Easy",
-type: true,
-NoQ: "5"
+// var selection = {
+// category: "General Knowledge",
+// difficulty: "Easy",
+// type: true,
+// NoQ: "5"
 
-}
+// }
 
 // Added arrays for further calling/ usage in functions
 
@@ -57,8 +57,8 @@ playButton.addEventListener("click", function() {
 
     }
 
-    // displayPlay.style.display = "none";
-    // displayHighScore.style.display = "none";
+    displayPlay.style.display = "none";
+    displayHighScore.style.display = "none";
 
     var startButton = document.createElement("button");
     startButton.textContent = "Start the Quiz!";
@@ -80,8 +80,9 @@ playButton.addEventListener("click", function() {
 
 
 function generateQs (selections) {
-// const apiURL = "https://opentdb.com/api.php?amount=25&category=9&difficulty=medium&type=boolean"
-// https://opentdb.com/api.php?amount=5&category=9&difficulty=Easy&type=boolean
+const apiURL = "https://opentdb.com/api.php?amount=25&category=9&difficulty=medium&type=boolean"
+
+// const https:"//opentdb.com/api.php?amount=5&category=9&difficulty=Easy&type=boolean"
 
 const dynamicURL = "https://opentdb.com/api.php?amount=" + selections[3] 
 + "&category=" + 20 +
@@ -99,6 +100,7 @@ fetch(dynamicURL)
 
     
 }
+
 // - Take user input to create quiz object
 // create start function
     // create defined variables to push to the API
