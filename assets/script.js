@@ -1,24 +1,28 @@
+// Setting initial arrays for Trivia questions
 const category = ["General Knowledge", "Mythology", "Animals"]
-const categoryRef = [1,20,27]
-const difficulty = ["easy", "medium", "hard"]
+const categoryRef = [9,20,27]
+const difficulty = ["Easy", "Medium", "Mard"]
+const difficultyRef = ["easy", "medium", "hard"]
 const type = ["Multiple Choice", "T/F"]
 const typeRef = ["multiple","boolean"]
 const NoQ = ["5", "6", "7", "8", "9", "10"]
 
-
-var playButton = document.querySelector("#Play");
-var displayHighScore = document.querySelector("#HighScore");
-var displayPlay = document.querySelector("#Play");
-
-// Added arrays for further calling/ usage in functions
-
-// - Render initial launch page & quiz options for user
-// Create options for users to select from. Dropdown menus based on arrays. 
-
+// Defining new arrays with Trivia questions for display & answers for URL generation
 const lists = [category, difficulty, type, NoQ];
+const listsRef = [categoryRef, difficultyRef, typeRef, NoQ];
+
+// Assigning names to existing HTML elements
+const playButton = document.querySelector("#Play");
+const displayHighScore = document.querySelector("#HighScore");
+const displayGuidance = document.querySelector("#home h2");
+const home2 = document.querySelector("#home2");
+const home3 = document.querySelector("#home3");
+
+// --- SECTION 1 ----
+// Launching the Trivia selections
 
 playButton.addEventListener("click", function() {
-     
+    // For each of the categories contained in [lists] loop through to create a dropdown menu
     for (j=0; j < lists.length; j++) {
         var select1 = document.createElement("select");
         for (var i = 0; i < lists[j].length; i++) {
@@ -30,38 +34,48 @@ playButton.addEventListener("click", function() {
 
         var button1 = document.createElement("p");
         button1.appendChild(select1);
-        document.getElementById("home").appendChild(button1);
+        home2.appendChild(button1);
     }
 
-    // displayPlay.style.display = "none";
-    // displayHighScore.style.display = "none";
+    // Change instructtions * hide the two initial buttons of Play & High Score
+    displayGuidance.textContent = "Selection options for quiz";
+    playButton.style.display = "none";
+    displayHighScore.style.display = "none";
 
+    // Create a new button for Starting the quiz
     var startButton = document.createElement("button");
     startButton.textContent = "Start the Quiz!";
-    document.getElementById("home").appendChild(startButton);
+    home3.appendChild(startButton);
 
     const selections = []
 
+    // Creating an eventlistener function for the Start the Quiz button to store selected values
     startButton.addEventListener("click", function() {
         for (j=0; j < lists.length; j++) { 
-            var selectedOption = document.querySelectorAll('select')[j].options[document.querySelectorAll('select')[j].selectedIndex];
-            var selectedValue = selectedOption.text;
-            selections.push(selectedValue)
+            const selectedOption = document.querySelectorAll('select')[j].options[document.querySelectorAll('select')[j].selectedIndex];
+            const selectedValue = selectedOption.text;
+            const selectedRef = lists[j].indexOf(selectedValue);
+            selections.push(listsRef[j][selectedRef])
         }
         console.log(selections);
+        hideOptions();
         getQs(selections);
     });
 
 });
 
+// --- SECTION 2 ---
+// Get questions from API & create cards
+function hideOptions() {
+    displayGuidance.textContent = "";
+    home2.style.display = "none";
+    home3.style.display = "none";
+}
 
 function getQs (selections) {
-    // const apiURL = "https://opentdb.com/api.php?amount=25&category=9&difficulty=medium&type=boolean"
-    // https://opentdb.com/api.php?amount=5&category=9&difficulty=Easy&type=boolean
-
     const dynamicURL = "https://opentdb.com/api.php?amount=" + selections[3] 
-    + "&category=" + 9 +
-    "&difficulty=" + selections[1] + "&type=multiple"
+    + "&category=" + selections[0] +
+    "&difficulty=" + selections[1] + "&type=" + selections[2]
 
     console.log(dynamicURL);
 
