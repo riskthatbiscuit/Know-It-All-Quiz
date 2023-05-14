@@ -1,5 +1,6 @@
 :root {
     background-color: chartreuse;
+    display: flex;
 }
 
 * {
@@ -109,6 +110,10 @@ select {
   justify-content: end;
 }
 
+
+h2 {
+  
+
 /* QuestionCards */
 questioncard {
   padding: 20px 10px;
@@ -134,4 +139,5 @@ category {
     text-align: center;
     padding-bottom: 5rem;
     background-color: blue;
+
 }
