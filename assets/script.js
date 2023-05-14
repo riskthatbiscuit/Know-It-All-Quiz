@@ -44,6 +44,7 @@ playButton.addEventListener("click", function() {
 
     // Create a new button for Starting the quiz
     var startButton = document.createElement("button");
+    startButton.id = "start"
     startButton.textContent = "Start the Quiz!";
     home3.appendChild(startButton);
 
@@ -66,12 +67,14 @@ playButton.addEventListener("click", function() {
 
 // --- SECTION 2 ---
 // Get questions from API & create cards
+// Hide previous dropdowns & text
 function hideOptions() {
     displayGuidance.textContent = "";
     home2.style.display = "none";
     home3.style.display = "none";
 }
 
+// Generate URL from selections and pull data into pulledData
 function getQs (selections) {
     const dynamicURL = "https://opentdb.com/api.php?amount=" + selections[3] 
     + "&category=" + selections[0] +
@@ -91,24 +94,52 @@ function getQs (selections) {
 
 }
 
+// Generate cards from the pulled Questions
 function generateQs(pulledData) {
     var results = pulledData.results;
-    console.log(results)
     for (var k = 0; k < results.length; k++) {
         console.log(results[k]);
         var questionBox = document.createElement("questionCard");
-        var questionCat = document.createElement("p");
+        var questionCat = document.createElement("Category");
         var questionQn = document.createElement("p");
+        var answerOptions = document.createElement("ul");
 
         questionCat.textContent= results[k].category;        
         questionQn.textContent= results[k].question;
-        // questionBox.appendChild(results[k]);
         document.getElementById("container").appendChild(questionBox);
         questionBox.appendChild(questionCat);
         questionBox.appendChild(questionQn);
+        questionBox.appendChild(answerOptions);
+
+        if (results[k].type === "boolean") {
+            answersAvail = ["True","False"];
+        } else {
+            answersAvail = results[k].incorrect_answers;
+            answersAvail.splice(Math.floor(Math.random()*answersAvail.length),0,results[k].correct_answer);
+        }
+        
+        for (i = 0; i < answersAvail.length; i++) {
+            var booleanButton = document.createElement("Button");
+            const Qnref = k;
+            const ansSelected = answersAvail[i];
+            const corrAnswer = results[k].correct_answer;
+            booleanButton.class = "ansOptions"
+            booleanButton.textContent = ansSelected;
+            booleanButton.addEventListener("click", function() {
+                answerSelect(Qnref, ansSelected, corrAnswer);
+            })
+            answerOptions.appendChild(booleanButton);
+        }
     }
 }
 
+
+function answerSelect(Qnref, ansSelected, corrAnswer) {
+    console.log(Qnref);
+    console.log(ansSelected);
+    console.log(corrAnswer);
+}
+// List
 
 // - Take user input to create quiz object
 // create start function
