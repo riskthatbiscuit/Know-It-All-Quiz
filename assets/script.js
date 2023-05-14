@@ -1,7 +1,7 @@
 // Setting initial arrays for Trivia questions
 const category = ["General Knowledge", "Mythology", "Animals"]
 const categoryRef = [9,20,27]
-const difficulty = ["Easy", "Medium", "Mard"]
+const difficulty = ["Easy", "Medium", "Hard"]
 const difficultyRef = ["easy", "medium", "hard"]
 const type = ["Multiple Choice", "T/F"]
 const typeRef = ["multiple","boolean"]
@@ -122,7 +122,8 @@ function generateQs(pulledData) {
             answersAvail = results[k].incorrect_answers;
             answersAvail.splice(Math.floor(Math.random()*answersAvail.length),0,results[k].correct_answer);
         }
-        
+        ansInput[k]="";
+
         for (i = 0; i < answersAvail.length; i++) {
             const booleanButton = document.createElement("Button");
             const Qnref = k;
@@ -130,12 +131,15 @@ function generateQs(pulledData) {
             booleanButton.className = "ansOptions"
             booleanButton.textContent = ansSelected;
             booleanButton.addEventListener("click", function() {
-                if (booleanButton.className === "ansOptions selected") {
-                    booleanButton.className = "ansOptions"
+                if (ansInput[Qnref]!== "") {
+                    booleanButton.className = "ansOptions";
+                    // ansInput[Qnref] = "";
+                    // NEED TO ADD IN A CONTROL SO THAT ONLY ONE CAN BE SELECTED
                 } else {
                     booleanButton.className = "ansOptions selected"
                     ansInput[Qnref] = ansSelected;
                 }
+                console.log(ansInput[Qnref])
             })
             answerOptions.appendChild(booleanButton);
         }
@@ -148,7 +152,7 @@ function generateQs(pulledData) {
 
 // Create button 
 function createSubmit () {
-    var submitButton = document.createElement("button");
+    const submitButton = document.createElement("button");
     submitButton.id = "submit"
     submitButton.textContent = "Submit your answers!";
     home3.appendChild(submitButton);
@@ -156,52 +160,46 @@ function createSubmit () {
 }
 // Click event
 function submit() {
-    console.log(ansInput);
-    console.log(ansCorrect);
+    // console.log(ansInput);
+    // console.log(ansCorrect);
+    scoreCalc = 0;
+    for (i=0; i < ansCorrect.length; i++) {
+        if (ansInput[i] == ansCorrect[i]) {
+            scoreCalc += 1;
+        }
+    }
+    // console.log(scoreCalc)
+    // console.log(ansCorrect.length)
+    // console.log(scoreCalc/ansCorrect)
+    const scorePerc = scoreCalc/ansCorrect.length*100;
+    
+    alert('Congratulations you got ' + scoreCalc + ' answers out of ' + ansCorrect.length + '. That is ' + scorePerc + '%')
+    
+    for (i=0; i < ansCorrect.length; i++) {
+        const question = document.querySelector("questionCard");
+        question.remove();  
+    }
 
+    resetPage();
 }
-// Check that each one is selected once each
-// Compare to answers creating a score
-// Display score
-// Leave section for second API
 
-// Create High-score count
-
+function resetPage() {
+    const startButton = document.querySelector("#start");
+    const submitButton = document.querySelector("#submit")
+    displayGuidance.textContent = "Ready?";
+    home2.style.display = "block";
+    for (i=0; i < lists.length; i++) {
+        const dropdowns = document.querySelector("p");
+        dropdowns.remove();  
+    }
+    startButton.remove();
+    submitButton.remove();
+    playButton.style.display = "block";
+    displayHighScore.style.display = "block";
+}
 
 // --- SECTION 4 ---
-// Show main page
-
-
-
-// List
-
-// - Take user input to create quiz object
-// create start function
-    // create defined variables to push to the API
-
-
-// - Create object with responses from FOAAS
-
-
-// - Create score object = 0 [local storage]
-
-
-// - Create Loop
-
-
-// --- Display question from Quiz API
-
-
-// --- Recieve answer
-
-
-// --- Display Text from FOAAS object (random, although based on true/false)
-
-
-// --- Add to score
-
-
-// - End quiz (final score, high-scores, final response)
+// Highscores
 
 // NICE TO HAVES
 // Add Timer
