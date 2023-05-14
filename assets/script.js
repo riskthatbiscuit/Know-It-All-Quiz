@@ -227,4 +227,7 @@ function showHighScores(){
 }
 
 // ---- NICE TO HAVES
+
+// Add Timer
+
 // Add Timer

@@ -58,6 +58,17 @@ button#HighScore {
  
 }
 
+button#start {
+  position: relative;
+  display: inline;
+    font-size: 2rem;
+    padding: 2rem 0;
+    width: 30rem;
+    text-align: center;
+    margin: auto;
+ 
+}
+
 button:hover {
   justify-content: center;
   cursor: pointer;
@@ -99,6 +110,34 @@ select {
   justify-content: end;
 }
 
+
 h2 {
   
+
+/* QuestionCards */
+questioncard {
+  padding: 20px 10px;
+  margin: 10px;
+  border: 2px solid #bfbfbf;
+  background-color: #fff;
+}
+
+category {
+    font-size: 1.2rem;
+    text-align: center;
+    padding-bottom: 5rem;
+}
+
+.ansOptions {
+    font-size: 1.2rem;
+    text-align: center;
+    padding-bottom: 5rem;
+}
+
+.selected {
+    font-size: 1.2rem;
+    text-align: center;
+    padding-bottom: 5rem;
+    background-color: blue;
+
 }
