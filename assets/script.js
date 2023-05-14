@@ -20,7 +20,58 @@ const displayGuidance = document.querySelector("#home h2");
 const home2 = document.querySelector("#home2");
 const home3 = document.querySelector("#home3");
 
-// --- SECTION 1 ----
+// --- SECTION 1 -------------------------------------------------------------------
+// SCREEN CHANGES
+function firstChange() {
+        // Change instructtions * hide the two initial buttons of Play & High Score
+    displayGuidance.textContent = "Selection options for quiz";
+    playButton.style.display = "none";
+    displayHighScore.style.display = "none";
+
+    // Create a new button for Starting the quiz
+    const startButton = document.createElement("button");
+    startButton.id = "start"
+    startButton.textContent = "Start the Quiz!";
+    home3.appendChild(startButton);
+}
+
+function secondChange() {
+    const startButton = document.querySelector("#start");
+    displayGuidance.textContent = "";
+    home2.style.display = "none";
+    startButton.style.display = "none";
+}
+
+function createSubmit () {
+    const submitButton = document.createElement("button");
+    submitButton.id = "submit"
+    submitButton.textContent = "Submit your answers!";
+    submitButton.addEventListener("click", submit)
+    home3.appendChild(submitButton);
+}
+
+function resetPage() {
+    const startButton = document.querySelector("#start");
+    const submitButton = document.querySelector("#submit")
+    displayGuidance.textContent = "Ready?";
+    home2.style.display = "block";
+
+    for (i=0; i < ansCorrect.length; i++) {
+        const question = document.querySelector("questionCard");
+        question.remove();  
+    }
+
+    for (i=0; i < lists.length; i++) {
+        const dropdowns = document.querySelector("p");
+        dropdowns.remove();  
+    }
+    startButton.remove();
+    submitButton.remove();
+    playButton.style.display = "block";
+    displayHighScore.style.display = "block";
+}
+
+// --- SECTION 2 -------------------------------------------------------------------
 // Launching the Trivia selections
 
 playButton.addEventListener("click", function() {
@@ -39,20 +90,11 @@ playButton.addEventListener("click", function() {
         home2.appendChild(button1);
     }
 
-    // Change instructtions * hide the two initial buttons of Play & High Score
-    displayGuidance.textContent = "Selection options for quiz";
-    playButton.style.display = "none";
-    displayHighScore.style.display = "none";
-
-    // Create a new button for Starting the quiz
-    var startButton = document.createElement("button");
-    startButton.id = "start"
-    startButton.textContent = "Start the Quiz!";
-    home3.appendChild(startButton);
-
+    firstChange()
     const selections = []
 
     // Creating an eventlistener function for the Start the Quiz button to store selected values
+    const startButton = document.querySelector("#start");
     startButton.addEventListener("click", function() {
         for (j=0; j < lists.length; j++) { 
             const selectedOption = document.querySelectorAll('select')[j].options[document.querySelectorAll('select')[j].selectedIndex];
@@ -61,22 +103,15 @@ playButton.addEventListener("click", function() {
             selections.push(listsRef[j][selectedRef])
         }
         console.log(selections);
-        hideOptions();
+        secondChange();
         getQs(selections);
         createSubmit ();
     });
 
 });
 
-// --- SECTION 2 ---
+// --- SECTION 3 -------------------------------------------------------------------
 // Get questions from API & create cards
-// Hide previous dropdowns & text
-function hideOptions() {
-    const startButton = document.querySelector("#start");
-    displayGuidance.textContent = "";
-    home2.style.display = "none";
-    startButton.style.display = "none";
-}
 
 // Generate URL from selections and pull data into pulledData
 function getQs (selections) {
@@ -102,20 +137,22 @@ function getQs (selections) {
 function generateQs(pulledData) {
     var results = pulledData.results;
     for (var k = 0; k < results.length; k++) {
+        // Looping through each question and creating a question card
         ansCorrect[k] = results[k].correct_answer;
         console.log(results[k]);
         var questionBox = document.createElement("questionCard");
-        var questionCat = document.createElement("Category");
+        // var questionCat = document.createElement("Category");
         var questionQn = document.createElement("p");
         var answerOptions = document.createElement("ul");
 
-        questionCat.textContent= results[k].category;        
+        // questionCat.textContent= results[k].category;        
         questionQn.textContent= results[k].question;
         document.getElementById("container").appendChild(questionBox);
-        questionBox.appendChild(questionCat);
+        // questionBox.appendChild(questionCat);
         questionBox.appendChild(questionQn);
         questionBox.appendChild(answerOptions);
 
+        // Creating list of answers available for each question
         if (results[k].type === "boolean") {
             answersAvail = ["True","False"];
         } else {
@@ -124,6 +161,7 @@ function generateQs(pulledData) {
         }
         ansInput[k]="";
 
+        // Iterating through each answer, appending to card & creating an event listenter
         for (i = 0; i < answersAvail.length; i++) {
             const booleanButton = document.createElement("Button");
             const Qnref = k;
@@ -134,7 +172,7 @@ function generateQs(pulledData) {
                 if (ansInput[Qnref]!== "") {
                     booleanButton.className = "ansOptions";
                     // ansInput[Qnref] = "";
-                    // NEED TO ADD IN A CONTROL SO THAT ONLY ONE CAN BE SELECTED
+                    // TODO NEED TO ADD IN A CONTROL SO THAT ONLY ONE CAN BE SELECTED
                 } else {
                     booleanButton.className = "ansOptions selected"
                     ansInput[Qnref] = ansSelected;
@@ -144,62 +182,34 @@ function generateQs(pulledData) {
             answerOptions.appendChild(booleanButton);
         }
     }
-
 }
 
-// --- SECTION 3 ---
-// Get results
+// --- SECTION 3 -------------------------------------------------------------------
+// Get results & reset page
 
-// Create button 
-function createSubmit () {
-    const submitButton = document.createElement("button");
-    submitButton.id = "submit"
-    submitButton.textContent = "Submit your answers!";
-    home3.appendChild(submitButton);
-    submitButton.addEventListener("click", submit)
-}
 // Click event
 function submit() {
-    // console.log(ansInput);
-    // console.log(ansCorrect);
+    // Calculating the results of the quiz
     scoreCalc = 0;
     for (i=0; i < ansCorrect.length; i++) {
         if (ansInput[i] == ansCorrect[i]) {
             scoreCalc += 1;
         }
     }
-    // console.log(scoreCalc)
-    // console.log(ansCorrect.length)
-    // console.log(scoreCalc/ansCorrect)
+
     const scorePerc = scoreCalc/ansCorrect.length*100;
     
+    // Providing feedback to the user
     alert('Congratulations you got ' + scoreCalc + ' answers out of ' + ansCorrect.length + '. That is ' + scorePerc + '%')
-    
-    for (i=0; i < ansCorrect.length; i++) {
-        const question = document.querySelector("questionCard");
-        question.remove();  
-    }
+    // TODO THIS IS WHERE THE SECOND API SHOULD COME INTO CODE
+
 
     resetPage();
 }
 
-function resetPage() {
-    const startButton = document.querySelector("#start");
-    const submitButton = document.querySelector("#submit")
-    displayGuidance.textContent = "Ready?";
-    home2.style.display = "block";
-    for (i=0; i < lists.length; i++) {
-        const dropdowns = document.querySelector("p");
-        dropdowns.remove();  
-    }
-    startButton.remove();
-    submitButton.remove();
-    playButton.style.display = "block";
-    displayHighScore.style.display = "block";
-}
 
 // --- SECTION 4 ---
 // Highscores
 
-// NICE TO HAVES
+// ---- NICE TO HAVES
 // Add Timer
