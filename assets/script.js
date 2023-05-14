@@ -20,6 +20,9 @@ const displayGuidance = document.querySelector("#home h2");
 const home2 = document.querySelector("#home2");
 const home3 = document.querySelector("#home3");
 
+// Set highscores local storage
+let highScores = JSON.parse(localStorage.getItem("highscores")) || [];
+
 // --- SECTION 1 -------------------------------------------------------------------
 // SCREEN CHANGES
 function firstChange() {
@@ -185,7 +188,7 @@ function generateQs(pulledData) {
 }
 
 // --- SECTION 3 -------------------------------------------------------------------
-// Get results & reset page
+// Get results & reset page & set Highscore
 
 // Click event
 function submit() {
@@ -200,16 +203,28 @@ function submit() {
     const scorePerc = scoreCalc/ansCorrect.length*100;
     
     // Providing feedback to the user
-    alert('Congratulations you got ' + scoreCalc + ' answers out of ' + ansCorrect.length + '. That is ' + scorePerc + '%')
     // TODO THIS IS WHERE THE SECOND API SHOULD COME INTO CODE
-
-
+    const initials = prompt('Congratulations you got ' + scoreCalc + ' answers out of ' + ansCorrect.length + '. That is ' + scorePerc + '%. Enter your initials for a High Score')
+    const newScore = {initials, scorePerc};
+    highScores.push(newScore);
+    highScores.sort((a,b) => b.scorePerc - a.scorePerc);
+    highScores = highScores.slice(0,5);
+    localStorage.setItem("highscores",JSON.stringify(highScores));
     resetPage();
 }
 
-
 // --- SECTION 4 ---
 // Highscores
+displayHighScore.addEventListener("click", showHighScores);
+
+function showHighScores(){
+    let highScores = JSON.parse(localStorage.getItem("highscores")) || [];
+    let message = "Top 5 High Scores:\n";
+    highScores.forEach((scorePerc, index) => {
+        message += `${index + 1}. ${scorePerc.initials}: ${scorePerc.scorePerc}% \n`;
+    });
+    alert(message);
+}
 
 // ---- NICE TO HAVES
 // Add Timer
