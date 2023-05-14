@@ -10,6 +10,8 @@ const NoQ = ["5", "6", "7", "8", "9", "10"]
 // Defining new arrays with Trivia questions for display & answers for URL generation
 const lists = [category, difficulty, type, NoQ];
 const listsRef = [categoryRef, difficultyRef, typeRef, NoQ];
+const ansInput = []
+const ansCorrect = []
 
 // Assigning names to existing HTML elements
 const playButton = document.querySelector("#Play");
@@ -61,6 +63,7 @@ playButton.addEventListener("click", function() {
         console.log(selections);
         hideOptions();
         getQs(selections);
+        createSubmit ();
     });
 
 });
@@ -69,9 +72,10 @@ playButton.addEventListener("click", function() {
 // Get questions from API & create cards
 // Hide previous dropdowns & text
 function hideOptions() {
+    const startButton = document.querySelector("#start");
     displayGuidance.textContent = "";
     home2.style.display = "none";
-    home3.style.display = "none";
+    startButton.style.display = "none";
 }
 
 // Generate URL from selections and pull data into pulledData
@@ -98,6 +102,7 @@ function getQs (selections) {
 function generateQs(pulledData) {
     var results = pulledData.results;
     for (var k = 0; k < results.length; k++) {
+        ansCorrect[k] = results[k].correct_answer;
         console.log(results[k]);
         var questionBox = document.createElement("questionCard");
         var questionCat = document.createElement("Category");
@@ -119,26 +124,55 @@ function generateQs(pulledData) {
         }
         
         for (i = 0; i < answersAvail.length; i++) {
-            var booleanButton = document.createElement("Button");
+            const booleanButton = document.createElement("Button");
             const Qnref = k;
             const ansSelected = answersAvail[i];
-            const corrAnswer = results[k].correct_answer;
-            booleanButton.class = "ansOptions"
+            booleanButton.className = "ansOptions"
             booleanButton.textContent = ansSelected;
             booleanButton.addEventListener("click", function() {
-                answerSelect(Qnref, ansSelected, corrAnswer);
+                if (booleanButton.className === "ansOptions selected") {
+                    booleanButton.className = "ansOptions"
+                } else {
+                    booleanButton.className = "ansOptions selected"
+                    ansInput[Qnref] = ansSelected;
+                }
             })
             answerOptions.appendChild(booleanButton);
         }
     }
+
 }
 
+// --- SECTION 3 ---
+// Get results
 
-function answerSelect(Qnref, ansSelected, corrAnswer) {
-    console.log(Qnref);
-    console.log(ansSelected);
-    console.log(corrAnswer);
+// Create button 
+function createSubmit () {
+    var submitButton = document.createElement("button");
+    submitButton.id = "submit"
+    submitButton.textContent = "Submit your answers!";
+    home3.appendChild(submitButton);
+    submitButton.addEventListener("click", submit)
 }
+// Click event
+function submit() {
+    console.log(ansInput);
+    console.log(ansCorrect);
+
+}
+// Check that each one is selected once each
+// Compare to answers creating a score
+// Display score
+// Leave section for second API
+
+// Create High-score count
+
+
+// --- SECTION 4 ---
+// Show main page
+
+
+
 // List
 
 // - Take user input to create quiz object
