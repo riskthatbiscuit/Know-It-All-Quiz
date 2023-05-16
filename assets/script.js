@@ -23,38 +23,6 @@ const home3 = document.querySelector("#home3");
 // Set highscores local storage
 let highScores = JSON.parse(localStorage.getItem("highscores")) || [];
 
-const commentPos = "https://www.foaas.com/legend/:name/:from"
-let positiveData;
-let negativeData;
-fetch(commentPos, {
-    headers: {
-        "Content-Type": "text/plain"
-    }
-})
-    .then(function (response) {
-        return response.json()
-    })
-    .then(function (jsonData) {
-        positiveData = jsonData;
-        console.log(pulledData)
-    })
-const commentNeg = "https://www.foaas.com/ridiculous/us"
-
-fetch(commentNeg, {
-    headers: {
-        "Content-Type": "application/json"
-    }
-})
-    .then(function (response) {
-        return response.text()
-    })
-    .then(function (jsonData) {
-        var parser = new DOMParser()
-        parsedData = parser.parseFromString(jsonData, "text/html")
-        negativeData = parsedData.body.children[0].children[0].children[0].children[0].innerText;
-        console.log(negativeData)
-    })
-
 // --- SECTION 1 -------------------------------------------------------------------
 // SCREEN CHANGES
 function firstChange() {
@@ -90,7 +58,7 @@ function resetPage() {
     const submitButton = document.querySelector("#submit")
     displayGuidance.textContent = "Ready?";
     home2.style.display = "block";
-
+    
     for (i = 0; i < ansCorrect.length; i++) {
         const question = document.querySelector("questionCard");
         question.remove();
@@ -127,7 +95,7 @@ playButton.addEventListener("click", function () {
 
     firstChange()
     const selections = []
-
+    
     // Creating an eventlistener function for the Start the Quiz button to store selected values
     const startButton = document.querySelector("#start");
     startButton.addEventListener("click", function () {
@@ -231,9 +199,9 @@ function submit() {
             scoreCalc += 1;
         }
     }
-
+    
     const scorePerc = scoreCalc / ansCorrect.length * 100;
-
+    
     // Providing feedback to the user
     // TODO THIS IS WHERE THE SECOND API SHOULD COME INTO CODE
     const initials = prompt('Congratulations you got ' + scoreCalc + ' answers out of ' + ansCorrect.length + '. That is ' + scorePerc + '%. Enter your initials for a High Score')
@@ -260,34 +228,8 @@ function showHighScores() {
     alert(message);
 }
 
-// ---- NICE TO HAVES
-
-// Second API call function
-// function getComs () {
-// const supportURL = "https://www.foaas.com/operations";
-// const commentPos = "/legend/:name/:from"
-// const commentNeg = "/ridiculous/:from"
-
-// console.log(supportURL);
-
-// fetch(supportURL)
-//     .then(function (response) {
-//         return response.json()
-//     })
-//     .then(function(jsonData) {
-//         const pulledData = jsonData;
-//         console.log(pulledData)
-//     })
-// if (scorePerc < 50) {
-//     prompt(commentNeg)
-//     console.log(commentNeg)
-// }
-// else {
-//     prompt(commentPos)
-//     console.log(commentPos)
-// }
-
-// }
+// --- SECTION 5 ---
+// Second API
 
 function operationComs() {
 
@@ -320,4 +262,41 @@ function operationComs() {
             console.log(pulledData)
         })
 }
-console.log(document)
+// --- SECTION 6 ---
+// Specified commands pulled from API's listed options (One positive comment; One negative comment)
+// Command resides in URL for fetch request listed
+    const commentPos = "https://www.foaas.com/legend/Johnny/us"
+    let positiveData;
+    let negativeData;
+
+    fetch(commentPos, {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+        .then(function (response) {
+            return response.text()
+        })
+        .then(function (jsonData) {
+            var parser = new DOMParser()
+            parsedData = parser.parseFromString(jsonData, "text/html")
+            positiveData = parsedData.body.children[0].children[0].children[0].children[0].innerText;
+            console.log(positiveData)
+        })
+// Command resides in URL for fetch request listed
+    const commentNeg = "https://www.foaas.com/ridiculous/us"
+    
+    fetch(commentNeg, {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+        .then(function (response) {
+            return response.text()
+        })
+        .then(function (jsonData) {
+            var parser = new DOMParser()
+            parsedData = parser.parseFromString(jsonData, "text/html")
+            negativeData = parsedData.body.children[0].children[0].children[0].children[0].innerText;
+            console.log(negativeData)
+        })
