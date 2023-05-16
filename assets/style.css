@@ -1,137 +1,150 @@
 :root {
-    background-color: chartreuse;
+  background-color: chartreuse;
+  display: flex;
+  justify-content: center;
+  text-align: center;
 }
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-size: 62.5%;
-    font-family: cursive;
-}
-h1 {
-    font-size: 8rem;
-    text-align: center;
-    padding-top: 5rem;
-}
-h2 {
-    font-size: 4.2rem;
-    text-align: center;
-    padding-bottom: 5rem;
-}
-#container {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 80rem;
-    margin: auto;
-    padding: 2rem;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-size: 62.5%;
+  font-family: cursive;
+  /* border: 1px solid red; */
+  
 }
 
-.flex-column {
-    display: flex;
-    flex-direction: column;
+h1 {
+  font-size: 8rem;
+  text-align: center;
+  padding-top: 5rem;
+}
+
+h2 {
+  font-size: 8rem;
+  margin-top: 5rem;
+  margin: auto;
+  padding: 10rem;
+}
+
+#container {
+
 }
 
 button#Play {
-  position: relative;
-  display: inline;
-    font-size: 2rem;
-    padding: 2rem 0;
-    width: 30rem;
-    text-align: center;
-    margin: 1rem;
- 
+/* position: fixed; left: 25rem; top: 75rem; */
+display: inline;
+  font-size: 2rem;
+  padding: 2rem 0;
+  width: 30rem;
+justify-content: center;
+
 }
 
 button#HighScore {
-  position: relative;
-  display: inline;
-    font-size: 2rem;
-    padding: 2rem 0;
-    width: 30rem;
-    text-align: center;
-    margin: auto;
- 
+  /* position: fixed; right: 25rem; top: 77rem; */
+display: inline;
+  font-size: 2rem;
+  padding: 2rem 0;
+  width: 30rem;
+  justify-content: center;
+  margin-top: 150px;
+
 }
 
 button#start {
-  position: relative;
-  display: inline;
-    font-size: 2rem;
-    padding: 2rem 0;
-    width: 30rem;
-    text-align: center;
-    margin: auto;
- 
+position: relative;
+display: inline;
+  font-size: 2rem;
+  padding: 2rem 0;
+  width: 30rem;
+  text-align: center;
+  margin-top: 3rem;
+
 }
 
 button:hover {
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 1rem 1rem 0;
-  transition: transform 150%;
-  animation: wiggle 2s linear infinite;
+justify-content: center;
+cursor: pointer;
+box-shadow: 0 1rem 1rem 0;
+transition: transform 150%;
+animation: wiggle 2s linear infinite;
 }
 
 @keyframes wiggle {
-    0%, 7% {
-        transform: rotateZ(0);
-      }
-      15% {
-        transform: rotateZ(-15deg);
-      }
-      20% {
-        transform: rotateZ(10deg);
-      }
-      25% {
-        transform: rotateZ(-10deg);
-      }
-      30% {
-        transform: rotateZ(6deg);
-      }
-      35% {
-        transform: rotateZ(-4deg);
-      }
-      40%, 100% {
-        transform: rotateZ(0);
-      }
-    
+  0%, 7% {
+      transform: rotateZ(0);
+    }
+    15% {
+      transform: rotateZ(-15deg);
+    }
+    20% {
+      transform: rotateZ(10deg);
+    }
+    25% {
+      transform: rotateZ(-10deg);
+    }
+    30% {
+      transform: rotateZ(6deg);
+    }
+    35% {
+      transform: rotateZ(-4deg);
+    }
+    40%, 100% {
+      transform: rotateZ(0);
+    }
+  
 }
 
 select {
-  position: relative;
-  font-size: 2rem;
-  display: inline;
-  margin: auto;
-  justify-content: end;
+position: relative;
+font-size: 2rem;
+padding: .5rem;
+width: 30rem;
+background-color: deeppink ;
+text-align: center;
 }
+
+
+
+
 
 /* QuestionCards */
 questioncard {
-  padding: 20px 10px;
-  margin: 10px;
-  border: 2px solid #bfbfbf;
-  background-color: #fff;
+padding: 20px 10px;
+margin: 10px;
+border: 2px solid #bfbfbf;
+background-color: #fff;
 }
 
-category {
-    font-size: 1.2rem;
-    text-align: center;
-    padding-bottom: 5rem;
+p {
+  font-size: 3rem;
+  text-align: center;
+  padding: .5rem;
+  border: 5px black;
+  
+}
+
+#home3 {
+  just
 }
 
 .ansOptions {
-    font-size: 1.2rem;
-    text-align: center;
-    padding-bottom: 5rem;
+  font-size: 2rem;
+  text-align: center;
+  padding-bottom: 5rem;
+  width: 20rem;
 }
 
 .selected {
-    font-size: 1.2rem;
-    text-align: center;
-    padding-bottom: 5rem;
-    background-color: blue;
+  font-size: 1.2rem;
+  text-align: center;
+  padding-bottom: 5rem;
+  background-color: blue;
+
+}
+
+#submit {
+  font-size: 25px;
 }
