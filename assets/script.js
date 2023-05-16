@@ -26,7 +26,7 @@ let highScores = JSON.parse(localStorage.getItem("highscores")) || [];
 // --- SECTION 1 -------------------------------------------------------------------
 // SCREEN CHANGES
 function firstChange() {
-        // Change instructtions * hide the two initial buttons of Play & High Score
+        // Change instructions * hide the two initial buttons of Play & High Score
     displayGuidance.textContent = "Selection options for quiz";
     playButton.style.display = "none";
     displayHighScore.style.display = "none";
@@ -211,6 +211,8 @@ function submit() {
     highScores = highScores.slice(0,5);
     localStorage.setItem("highscores",JSON.stringify(highScores));
     resetPage();
+    // getComs();
+    operationComs();
 }
 
 // --- SECTION 4 ---
@@ -227,4 +229,63 @@ function showHighScores(){
 }
 
 // ---- NICE TO HAVES
-// Add Timer
+
+// Second API call function
+// function getComs () {
+    // const supportURL = "https://www.foaas.com/operations";
+    // const commentPos = "/legend/:name/:from"
+    // const commentNeg = "/ridiculous/:from"
+
+    // console.log(supportURL);
+
+    // fetch(supportURL)
+    //     .then(function (response) {
+    //         return response.json()
+    //     })
+    //     .then(function(jsonData) {
+    //         const pulledData = jsonData;
+    //         console.log(pulledData)
+    //     })
+    // if (scorePerc < 50) {
+    //     prompt(commentNeg)
+    //     console.log(commentNeg)
+    // }
+    // else {
+    //     prompt(commentPos)
+    //     console.log(commentPos)
+    // }
+
+// }
+
+function operationComs () {
+    const commentPos = "https://www.foaas.com/operations/legend/:name/:from"
+    const commentNeg = "https://www.foaas.com/operations/ridiculous/:from"
+
+    scoreCalc = 0;
+    for (i=0; i < ansCorrect.length; i++) {
+        if (ansInput[i] == ansCorrect[i]) {
+            scoreCalc += 1;
+        }
+    }
+
+    const scorePerc = scoreCalc/ansCorrect.length*100
+
+    if (scorePerc < 50) {
+        prompt(commentNeg)
+        console.log(commentNeg)
+    }
+    else {
+        prompt(commentPos)
+        console.log(commentPos)
+    }
+    const supportURL = "https://www.foaas.com/operations";
+
+    fetch(supportURL)
+        .then(function (response) {
+            return response.json()
+        })
+        .then(function(jsonData) {
+            const pulledData = jsonData;
+            console.log(pulledData)
+        })
+}
