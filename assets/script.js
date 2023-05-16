@@ -1,10 +1,10 @@
 // Setting initial arrays for Trivia questions
 const category = ["General Knowledge", "Mythology", "Animals"]
-const categoryRef = [9,20,27]
+const categoryRef = [9, 20, 27]
 const difficulty = ["Easy", "Medium", "Hard"]
 const difficultyRef = ["easy", "medium", "hard"]
 const type = ["Multiple Choice", "T/F"]
-const typeRef = ["multiple","boolean"]
+const typeRef = ["multiple", "boolean"]
 const NoQ = ["5", "6", "7", "8", "9", "10"]
 
 // Defining new arrays with Trivia questions for display & answers for URL generation
@@ -23,10 +23,42 @@ const home3 = document.querySelector("#home3");
 // Set highscores local storage
 let highScores = JSON.parse(localStorage.getItem("highscores")) || [];
 
+const commentPos = "https://www.foaas.com/legend/:name/:from"
+let positiveData;
+let negativeData;
+fetch(commentPos, {
+    headers: {
+        "Content-Type": "text/plain"
+    }
+})
+    .then(function (response) {
+        return response.json()
+    })
+    .then(function (jsonData) {
+        positiveData = jsonData;
+        console.log(pulledData)
+    })
+const commentNeg = "https://www.foaas.com/ridiculous/us"
+
+fetch(commentNeg, {
+    headers: {
+        "Content-Type": "application/json"
+    }
+})
+    .then(function (response) {
+        return response.text()
+    })
+    .then(function (jsonData) {
+        var parser = new DOMParser()
+        parsedData = parser.parseFromString(jsonData, "text/html")
+        negativeData = parsedData.body.children[0].children[0].children[0].children[0].innerText;
+        console.log(negativeData)
+    })
+
 // --- SECTION 1 -------------------------------------------------------------------
 // SCREEN CHANGES
 function firstChange() {
-        // Change instructions * hide the two initial buttons of Play & High Score
+    // Change instructions * hide the two initial buttons of Play & High Score
     displayGuidance.textContent = "Selection options for quiz";
     playButton.style.display = "none";
     displayHighScore.style.display = "none";
@@ -45,7 +77,7 @@ function secondChange() {
     startButton.style.display = "none";
 }
 
-function createSubmit () {
+function createSubmit() {
     const submitButton = document.createElement("button");
     submitButton.id = "submit"
     submitButton.textContent = "Submit your answers!";
@@ -59,14 +91,14 @@ function resetPage() {
     displayGuidance.textContent = "Ready?";
     home2.style.display = "block";
 
-    for (i=0; i < ansCorrect.length; i++) {
+    for (i = 0; i < ansCorrect.length; i++) {
         const question = document.querySelector("questionCard");
-        question.remove();  
+        question.remove();
     }
 
-    for (i=0; i < lists.length; i++) {
+    for (i = 0; i < lists.length; i++) {
         const dropdowns = document.querySelector("p");
-        dropdowns.remove();  
+        dropdowns.remove();
     }
     startButton.remove();
     submitButton.remove();
@@ -77,13 +109,13 @@ function resetPage() {
 // --- SECTION 2 -------------------------------------------------------------------
 // Launching the Trivia selections
 
-playButton.addEventListener("click", function() {
+playButton.addEventListener("click", function () {
     // For each of the categories contained in [lists] loop through to create a dropdown menu
-    for (j=0; j < lists.length; j++) {
+    for (j = 0; j < lists.length; j++) {
         var select1 = document.createElement("select");
         for (var i = 0; i < lists[j].length; i++) {
             var option = document.createElement("option");
-            option.value = (j+1)*100 + i;
+            option.value = (j + 1) * 100 + i;
             option.text = lists[j][i];
             select1.appendChild(option);
         }
@@ -98,8 +130,8 @@ playButton.addEventListener("click", function() {
 
     // Creating an eventlistener function for the Start the Quiz button to store selected values
     const startButton = document.querySelector("#start");
-    startButton.addEventListener("click", function() {
-        for (j=0; j < lists.length; j++) { 
+    startButton.addEventListener("click", function () {
+        for (j = 0; j < lists.length; j++) {
             const selectedOption = document.querySelectorAll('select')[j].options[document.querySelectorAll('select')[j].selectedIndex];
             const selectedValue = selectedOption.text;
             const selectedRef = lists[j].indexOf(selectedValue);
@@ -108,7 +140,7 @@ playButton.addEventListener("click", function() {
         console.log(selections);
         secondChange();
         getQs(selections);
-        createSubmit ();
+        createSubmit();
     });
 
 });
@@ -117,10 +149,10 @@ playButton.addEventListener("click", function() {
 // Get questions from API & create cards
 
 // Generate URL from selections and pull data into pulledData
-function getQs (selections) {
-    const dynamicURL = "https://opentdb.com/api.php?amount=" + selections[3] 
-    + "&category=" + selections[0] +
-    "&difficulty=" + selections[1] + "&type=" + selections[2]
+function getQs(selections) {
+    const dynamicURL = "https://opentdb.com/api.php?amount=" + selections[3]
+        + "&category=" + selections[0] +
+        "&difficulty=" + selections[1] + "&type=" + selections[2]
 
     console.log(dynamicURL);
 
@@ -128,7 +160,7 @@ function getQs (selections) {
         .then(function (response) {
             return response.json()
         })
-        .then(function(jsonData) {
+        .then(function (jsonData) {
             const pulledData = jsonData;
             console.log(pulledData)
             generateQs(pulledData)
@@ -149,7 +181,7 @@ function generateQs(pulledData) {
         var answerOptions = document.createElement("ul");
 
         // questionCat.textContent= results[k].category;        
-        questionQn.textContent= results[k].question;
+        questionQn.textContent = results[k].question;
         document.getElementById("container").appendChild(questionBox);
         // questionBox.appendChild(questionCat);
         questionBox.appendChild(questionQn);
@@ -157,12 +189,12 @@ function generateQs(pulledData) {
 
         // Creating list of answers available for each question
         if (results[k].type === "boolean") {
-            answersAvail = ["True","False"];
+            answersAvail = ["True", "False"];
         } else {
             answersAvail = results[k].incorrect_answers;
-            answersAvail.splice(Math.floor(Math.random()*answersAvail.length),0,results[k].correct_answer);
+            answersAvail.splice(Math.floor(Math.random() * answersAvail.length), 0, results[k].correct_answer);
         }
-        ansInput[k]="";
+        ansInput[k] = "";
 
         // Iterating through each answer, appending to card & creating an event listenter
         for (i = 0; i < answersAvail.length; i++) {
@@ -171,8 +203,8 @@ function generateQs(pulledData) {
             const ansSelected = answersAvail[i];
             booleanButton.className = "ansOptions"
             booleanButton.textContent = ansSelected;
-            booleanButton.addEventListener("click", function() {
-                if (ansInput[Qnref]!== "") {
+            booleanButton.addEventListener("click", function () {
+                if (ansInput[Qnref] !== "") {
                     booleanButton.className = "ansOptions";
                     // ansInput[Qnref] = "";
                     // TODO NEED TO ADD IN A CONTROL SO THAT ONLY ONE CAN BE SELECTED
@@ -194,22 +226,22 @@ function generateQs(pulledData) {
 function submit() {
     // Calculating the results of the quiz
     scoreCalc = 0;
-    for (i=0; i < ansCorrect.length; i++) {
+    for (i = 0; i < ansCorrect.length; i++) {
         if (ansInput[i] == ansCorrect[i]) {
             scoreCalc += 1;
         }
     }
 
-    const scorePerc = scoreCalc/ansCorrect.length*100;
-    
+    const scorePerc = scoreCalc / ansCorrect.length * 100;
+
     // Providing feedback to the user
     // TODO THIS IS WHERE THE SECOND API SHOULD COME INTO CODE
     const initials = prompt('Congratulations you got ' + scoreCalc + ' answers out of ' + ansCorrect.length + '. That is ' + scorePerc + '%. Enter your initials for a High Score')
-    const newScore = {initials, scorePerc};
+    const newScore = { initials, scorePerc };
     highScores.push(newScore);
-    highScores.sort((a,b) => b.scorePerc - a.scorePerc);
-    highScores = highScores.slice(0,5);
-    localStorage.setItem("highscores",JSON.stringify(highScores));
+    highScores.sort((a, b) => b.scorePerc - a.scorePerc);
+    highScores = highScores.slice(0, 5);
+    localStorage.setItem("highscores", JSON.stringify(highScores));
     resetPage();
     // getComs();
     operationComs();
@@ -219,7 +251,7 @@ function submit() {
 // Highscores
 displayHighScore.addEventListener("click", showHighScores);
 
-function showHighScores(){
+function showHighScores() {
     let highScores = JSON.parse(localStorage.getItem("highscores")) || [];
     let message = "Top 5 High Scores:\n";
     highScores.forEach((scorePerc, index) => {
@@ -232,51 +264,50 @@ function showHighScores(){
 
 // Second API call function
 // function getComs () {
-    // const supportURL = "https://www.foaas.com/operations";
-    // const commentPos = "/legend/:name/:from"
-    // const commentNeg = "/ridiculous/:from"
+// const supportURL = "https://www.foaas.com/operations";
+// const commentPos = "/legend/:name/:from"
+// const commentNeg = "/ridiculous/:from"
 
-    // console.log(supportURL);
+// console.log(supportURL);
 
-    // fetch(supportURL)
-    //     .then(function (response) {
-    //         return response.json()
-    //     })
-    //     .then(function(jsonData) {
-    //         const pulledData = jsonData;
-    //         console.log(pulledData)
-    //     })
-    // if (scorePerc < 50) {
-    //     prompt(commentNeg)
-    //     console.log(commentNeg)
-    // }
-    // else {
-    //     prompt(commentPos)
-    //     console.log(commentPos)
-    // }
+// fetch(supportURL)
+//     .then(function (response) {
+//         return response.json()
+//     })
+//     .then(function(jsonData) {
+//         const pulledData = jsonData;
+//         console.log(pulledData)
+//     })
+// if (scorePerc < 50) {
+//     prompt(commentNeg)
+//     console.log(commentNeg)
+// }
+// else {
+//     prompt(commentPos)
+//     console.log(commentPos)
+// }
 
 // }
 
-function operationComs () {
-    const commentPos = "https://www.foaas.com/operations/legend/:name/:from"
-    const commentNeg = "https://www.foaas.com/operations/ridiculous/:from"
+function operationComs() {
+
 
     scoreCalc = 0;
-    for (i=0; i < ansCorrect.length; i++) {
+    for (i = 0; i < ansCorrect.length; i++) {
         if (ansInput[i] == ansCorrect[i]) {
             scoreCalc += 1;
         }
     }
 
-    const scorePerc = scoreCalc/ansCorrect.length*100
+    const scorePerc = scoreCalc / ansCorrect.length * 100
 
     if (scorePerc < 50) {
-        prompt(commentNeg)
-        console.log(commentNeg)
+        prompt(negativeData)
+        console.log(negativeData)
     }
     else {
-        prompt(commentPos)
-        console.log(commentPos)
+        prompt(positiveData)
+        console.log(positiveData)
     }
     const supportURL = "https://www.foaas.com/operations";
 
@@ -284,8 +315,9 @@ function operationComs () {
         .then(function (response) {
             return response.json()
         })
-        .then(function(jsonData) {
+        .then(function (jsonData) {
             const pulledData = jsonData;
             console.log(pulledData)
         })
 }
+console.log(document)
