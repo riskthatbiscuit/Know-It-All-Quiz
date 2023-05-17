@@ -261,7 +261,7 @@ function operationComs() {
 // --- SECTION 6 ---
 // Specified commands pulled from API's listed options (One positive comment; One negative comment)
 // Command resides in URL for fetch request listed
-    const commentPos = "https://www.foaas.com/legend/Johnny/us"
+    const commentPos = "https://www.foaas.com/legend/yeah/us"
     let positiveData;
     let negativeData;
 
