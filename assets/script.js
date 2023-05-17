@@ -70,8 +70,8 @@ function resetPage() {
     }
     startButton.remove();
     submitButton.remove();
-    playButton.style.display = "block";
-    displayHighScore.style.display = "block";
+    playButton.style.display = "inline";
+    displayHighScore.style.display = "inline";
 }
 
 // --- SECTION 2 -------------------------------------------------------------------
@@ -149,7 +149,7 @@ function generateQs(pulledData) {
         var answerOptions = document.createElement("ul");
 
         // questionCat.textContent= results[k].category;        
-        questionQn.textContent = results[k].question;
+        questionQn.innerHTML = results[k].question;
         document.getElementById("container").appendChild(questionBox);
         // questionBox.appendChild(questionCat);
         questionBox.appendChild(questionQn);
@@ -170,7 +170,7 @@ function generateQs(pulledData) {
             const Qnref = k;
             const ansSelected = answersAvail[i];
             booleanButton.className = "ansOptions"
-            booleanButton.textContent = ansSelected;
+            booleanButton.innerHTML = ansSelected;
             booleanButton.addEventListener("click", function () {
                 if (ansInput[Qnref] !== "") {
                     booleanButton.className = "ansOptions";
@@ -232,8 +232,6 @@ function showHighScores() {
 // Second API
 
 function operationComs() {
-
-
     scoreCalc = 0;
     for (i = 0; i < ansCorrect.length; i++) {
         if (ansInput[i] == ansCorrect[i]) {
@@ -251,16 +249,7 @@ function operationComs() {
         prompt(positiveData)
         console.log(positiveData)
     }
-    const supportURL = "https://www.foaas.com/operations";
 
-    fetch(supportURL)
-        .then(function (response) {
-            return response.json()
-        })
-        .then(function (jsonData) {
-            const pulledData = jsonData;
-            console.log(pulledData)
-        })
 }
 // --- SECTION 6 ---
 // Specified commands pulled from API's listed options (One positive comment; One negative comment)
