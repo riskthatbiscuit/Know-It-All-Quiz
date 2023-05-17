@@ -4,7 +4,9 @@ Welcome to Know-It-All Quiz! 🎉🧠 This is a trivia game where you can test y
 
 ## Getting Started 🚀
 
-To run the game, open the `index.html` file in your web browser. Make sure you have a stable internet connection for fetching trivia questions from the API.
+[Website Link](https://riskthatbiscuit.github.io/Know-It-All-Quiz/)
+
+Make sure you have a stable internet connection for fetching trivia questions from the API.
 
 ## Gameplay Instructions 📚
 
