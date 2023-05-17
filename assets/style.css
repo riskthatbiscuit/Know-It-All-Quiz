@@ -1,5 +1,5 @@
 :root {
-  background-color: chartreuse;
+  background-color: rgb(255, 157, 108);
   display: flex;
   justify-content: center;
   text-align: center;
@@ -33,12 +33,12 @@ h2 {
 }
 
 button#Play {
-/* position: fixed; left: 25rem; top: 75rem; */
 display: inline;
   font-size: 2rem;
   padding: 2rem 0;
   width: 30rem;
 justify-content: center;
+background-color: rgb(10, 243, 219);
 
 }
 
@@ -50,6 +50,7 @@ display: inline;
   width: 30rem;
   justify-content: center;
   margin-top: 150px;
+  background-color: rgb(10, 243, 219);
 
 }
 
@@ -61,6 +62,7 @@ display: inline;
   width: 30rem;
   text-align: center;
   margin-top: 3rem;
+  background-color: rgb(10, 243, 219);
 
 }
 
@@ -102,7 +104,7 @@ position: relative;
 font-size: 2rem;
 padding: .5rem;
 width: 30rem;
-background-color: deeppink ;
+background-color: yellow ;
 text-align: center;
 }
 
@@ -112,29 +114,50 @@ text-align: center;
 
 /* QuestionCards */
 questioncard {
-padding: 20px 10px;
-margin: 10px;
-border: 2px solid #bfbfbf;
-background-color: #fff;
+padding: 50px;
+margin: 10rem;
+border: 5px dotted rgb(55, 0, 106);
+background-color: rgb(10, 243, 219);
+border-width: ; 
+display: block;
+
+background-image: linear-gradient(90deg, white 50%, transparent 75%), linear-gradient(90deg, white 50%, transparent 75%), linear-gradient(0deg, white 50%, transparent 75%), linear-gradient(0deg, white 50%, transparent 75%);
+    background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+    background-size: 100px 20px, 100px 20px, 20px 100px, 20px 100px;
+    background-position: left top, right bottom, left bottom, right top;
+    animation: border-dance 5s infinite linear;
 }
 
-p {
+@keyframes border-dance {
+  0% {
+    background-position: left top, right bottom, left bottom, right   top;
+  }
+  100% {
+    background-position: left 1500px top, right 1500px bottom , left bottom 1500px , right   top 1500px;
+  }
+}
+
+questioncard p {
   font-size: 3rem;
   text-align: center;
   padding: .5rem;
-  border: 5px black;
+  border: 5px dotted rgb(10, 24, 120);
+  border-radius: 25px;
+  width: auto ;
   
 }
 
 #home3 {
-  just
+  margin: 5rem;
 }
 
 .ansOptions {
   font-size: 2rem;
   text-align: center;
-  padding-bottom: 5rem;
+  padding: 1.5rem;
   width: 20rem;
+  background-color: yellow;
+  margin-top: 2rem;
 }
 
 .selected {
@@ -146,5 +169,8 @@ p {
 }
 
 #submit {
-  font-size: 25px;
+  font-size: 40px;
+  padding: 2rem;
+  background-color: rgb(10, 243, 219);
+  color: ;
 }
