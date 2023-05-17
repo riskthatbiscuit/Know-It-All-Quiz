@@ -280,7 +280,7 @@ function operationComs() {
             console.log(positiveData)
         })
 // Command resides in URL for fetch request listed
-    const commentNeg = "https://www.foaas.com/ridiculous/us"
+    const commentNeg = "https://www.foaas.com/holygrail/us"
     
     fetch(commentNeg, {
         headers: {
