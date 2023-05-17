@@ -16,13 +16,13 @@
 }
 
 h1 {
-  font-size: 8rem;
+  font-size: 6rem;
   text-align: center;
   padding-top: 5rem;
 }
 
 h2 {
-  font-size: 8rem;
+  font-size: 4rem;
   margin-top: 5rem;
   margin: auto;
   padding: 10rem;
@@ -161,10 +161,10 @@ questioncard p {
 }
 
 .selected {
-  font-size: 1.2rem;
+  font-size: 2rem;
   text-align: center;
-  padding-bottom: 5rem;
-  background-color: blue;
+  padding-bottom: rem;
+  background-color: rgb(156, 156, 238);
 
 }
 
