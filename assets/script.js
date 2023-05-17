@@ -40,7 +40,7 @@ function firstChange() {
 
 function secondChange() {
     const startButton = document.querySelector("#start");
-    displayGuidance.textContent = "";
+    displayGuidance.textContent = "Answer the questions below";
     home2.style.display = "none";
     startButton.style.display = "none";
 }
@@ -68,6 +68,7 @@ function resetPage() {
         const dropdowns = document.querySelector("p");
         dropdowns.remove();
     }
+    
     startButton.remove();
     submitButton.remove();
     playButton.style.display = "inline";
@@ -110,7 +111,6 @@ playButton.addEventListener("click", function () {
         getQs(selections);
         createSubmit();
     });
-
 });
 
 // --- SECTION 3 -------------------------------------------------------------------
@@ -138,6 +138,12 @@ function getQs(selections) {
 
 // Generate cards from the pulled Questions
 function generateQs(pulledData) {
+    var responseCode = pulledData.response_code;
+    console.log(responseCode);
+    if (responseCode === 1) {
+        resetPage();
+        alert("Unfortunately the API doesn't have enough questions with that combination");
+    } else {
     var results = pulledData.results;
     for (var k = 0; k < results.length; k++) {
         // Looping through each question and creating a question card
@@ -184,6 +190,7 @@ function generateQs(pulledData) {
             })
             answerOptions.appendChild(booleanButton);
         }
+        }   
     }
 }
 
