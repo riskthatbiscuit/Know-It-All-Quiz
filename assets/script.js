@@ -38,6 +38,7 @@ function firstChange() {
     home3.appendChild(startButton);
 }
 
+// Create a start button and hide initial buttons
 function secondChange() {
     const startButton = document.querySelector("#start");
     displayGuidance.textContent = "Answer the questions below";
@@ -45,6 +46,7 @@ function secondChange() {
     startButton.style.display = "none";
 }
 
+// Create a submit button
 function createSubmit() {
     const submitButton = document.createElement("button");
     submitButton.id = "submit"
@@ -53,6 +55,7 @@ function createSubmit() {
     home3.appendChild(submitButton);
 }
 
+// Reset the page once quiz is complete
 function resetPage() {
     const startButton = document.querySelector("#start");
     const submitButton = document.querySelector("#submit")
@@ -138,26 +141,25 @@ function getQs(selections) {
 
 // Generate cards from the pulled Questions
 function generateQs(pulledData) {
+    // If responseCode = 1, then API doesnt have enough questions, reset
     var responseCode = pulledData.response_code;
-    console.log(responseCode);
     if (responseCode === 1) {
         resetPage();
         alert("Unfortunately the API doesn't have enough questions with that combination");
     } else {
+    // Looping through each question and creating a question card
     var results = pulledData.results;
     for (var k = 0; k < results.length; k++) {
-        // Looping through each question and creating a question card
         ansCorrect[k] = results[k].correct_answer;
         console.log(results[k]);
+
+        // Creating elements with data for each question
         var questionBox = document.createElement("questionCard");
-        // var questionCat = document.createElement("Category");
         var questionQn = document.createElement("p");
         var answerOptions = document.createElement("ul");
 
-        // questionCat.textContent= results[k].category;        
         questionQn.innerHTML = results[k].question;
         document.getElementById("container").appendChild(questionBox);
-        // questionBox.appendChild(questionCat);
         questionBox.appendChild(questionQn);
         questionBox.appendChild(answerOptions);
 
@@ -199,7 +201,6 @@ function soloSelectionCheck(answerOptions, Qnref, ansSelected) {
 
     if (this.classList.contains("selected")) {
       ansInput[Qnref] = ansSelected;
-      console.log(ansSelected);
     } else {
       ansInput[Qnref] = "";
     }
@@ -209,7 +210,7 @@ function soloSelectionCheck(answerOptions, Qnref, ansSelected) {
 // --- SECTION 3 -------------------------------------------------------------------
 // Get results & reset page & set Highscore
 
-// Click event
+// Once submit button pressed, calculate score & prompt
 function submit() {
     // Calculating the results of the quiz
     scoreCalc = 0;
@@ -229,7 +230,6 @@ function submit() {
     highScores = highScores.slice(0, 5);
     localStorage.setItem("highscores", JSON.stringify(highScores));
     resetPage();
-    // getComs();
     operationComs();
 }
 
@@ -261,11 +261,9 @@ function operationComs() {
 
     if (scorePerc < 50) {
         alert(negativeData)
-        console.log(negativeData)
     }
     else {
         alert(positiveData)
-        console.log(positiveData)
     }
 
 }
@@ -288,7 +286,6 @@ function operationComs() {
             var parser = new DOMParser()
             parsedData = parser.parseFromString(jsonData, "text/html")
             positiveData = parsedData.body.children[0].children[0].children[0].children[0].innerText;
-            console.log(positiveData)
         })
 // Command resides in URL for fetch request listed
     const commentNeg = "https://www.foaas.com/holygrail/us"
@@ -305,5 +302,4 @@ function operationComs() {
             var parser = new DOMParser()
             parsedData = parser.parseFromString(jsonData, "text/html")
             negativeData = parsedData.body.children[0].children[0].children[0].children[0].innerText;
-            console.log(negativeData)
         })
