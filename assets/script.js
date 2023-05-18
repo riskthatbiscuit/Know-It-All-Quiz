@@ -175,23 +175,35 @@ function generateQs(pulledData) {
             const booleanButton = document.createElement("Button");
             const Qnref = k;
             const ansSelected = answersAvail[i];
-            booleanButton.className = "ansOptions"
+            booleanButton.className = "ansOptions kRef" + Qnref;
             booleanButton.innerHTML = ansSelected;
-            booleanButton.addEventListener("click", function () {
-                if (ansInput[Qnref] !== "") {
-                    booleanButton.className = "ansOptions";
-                    // ansInput[Qnref] = "";
-                    // TODO NEED TO ADD IN A CONTROL SO THAT ONLY ONE CAN BE SELECTED
-                } else {
-                    booleanButton.className = "ansOptions selected"
-                    ansInput[Qnref] = ansSelected;
-                }
-                console.log(ansInput[Qnref])
-            })
-            answerOptions.appendChild(booleanButton);
-        }
-        }   
+            
+             booleanButton.addEventListener("click", soloSelectionCheck(answerOptions, Qnref, ansSelected));
+
+        answerOptions.appendChild(booleanButton);
+      }
     }
+  }
+}
+// Event listener function, this will ensure only one option selected and assign value to ansInput array
+function soloSelectionCheck(answerOptions, Qnref, ansSelected) {
+  return function() {
+    const previouslySelectedButtons = answerOptions.querySelectorAll(".kRef" + Qnref + ".selected");
+
+    previouslySelectedButtons.forEach(function(button) {
+      button.classList.remove("selected");
+    });
+
+    // Toggle the "selected" class for the clicked button
+    this.classList.toggle("selected");
+
+    if (this.classList.contains("selected")) {
+      ansInput[Qnref] = ansSelected;
+      console.log(ansSelected);
+    } else {
+      ansInput[Qnref] = "";
+    }
+  };
 }
 
 // --- SECTION 3 -------------------------------------------------------------------
@@ -210,7 +222,6 @@ function submit() {
     const scorePerc = scoreCalc / ansCorrect.length * 100;
     
     // Providing feedback to the user
-    // TODO THIS IS WHERE THE SECOND API SHOULD COME INTO CODE
     const initials = prompt('Congratulations you got ' + scoreCalc + ' answers out of ' + ansCorrect.length + '. That is ' + scorePerc + '%. Enter your initials for a High Score')
     const newScore = { initials, scorePerc };
     highScores.push(newScore);
@@ -249,11 +260,11 @@ function operationComs() {
     const scorePerc = scoreCalc / ansCorrect.length * 100
 
     if (scorePerc < 50) {
-        prompt(negativeData)
+        alert(negativeData)
         console.log(negativeData)
     }
     else {
-        prompt(positiveData)
+        alert(positiveData)
         console.log(positiveData)
     }
 
